@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AndroidBasics</string>
+    <string name="login">LOGIN</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="submit">SUBMIT</string>
+    <string name="hello_username">Hello UserName</string>
+    <string name="dummy_image">dummy image</string>
+    <string name="password">Password</string>
+</resources>
