@@ -3,10 +3,12 @@ package com.example.androidbasics;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainContainerActivity extends AppCompatActivity implements LoginFragment.callBackListener {
+public class MainContainerActivity extends AppCompatActivity implements LoginFragment.loginCallBackListener, PasswordFragment.passwordCallBackListener {
 
     String TAG = "MainContainerActivity";
 
@@ -15,11 +17,24 @@ public class MainContainerActivity extends AppCompatActivity implements LoginFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_container);
         Log.d(TAG, "onCreate: " + TAG);
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString(getString(R.string.username),"");
+        String password = sharedPreferences.getString(getString(R.string.password),"");
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentContainer, LoginFragment.newInstance())
-                    .commit();
+            if (username.isEmpty() && password.isEmpty()) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, LoginFragment.newInstance())
+                        .commit();
+            } else if (!username.isEmpty() && password.isEmpty()) {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, PasswordFragment.newInstance(username))
+                        .commit();
+            } else {
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, HomeFragment.newInstance(username))
+                        .commit();
+            }
         }
     }
 
@@ -28,6 +43,14 @@ public class MainContainerActivity extends AppCompatActivity implements LoginFra
         // Replace LoginFragment with PasswordFragment and pass the username
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, PasswordFragment.newInstance(username))
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onPasswordSuccess(String username) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainer, HomeFragment.newInstance(username))
                 .addToBackStack(null)
                 .commit();
     }

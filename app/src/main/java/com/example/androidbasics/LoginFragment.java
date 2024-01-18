@@ -1,6 +1,7 @@
 package com.example.androidbasics;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,9 +23,9 @@ import android.widget.EditText;
 public class LoginFragment extends Fragment {
 
     public static final String TAG = "LoginFragment";
-    private callBackListener mListener;
+    private loginCallBackListener mListener;
 
-    public interface callBackListener {
+    public interface loginCallBackListener {
         void onLoginSuccess(String username);
     }
 
@@ -41,8 +42,8 @@ public class LoginFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         Log.d(TAG, "onAttach: "+TAG);
-        if (context instanceof callBackListener) {
-            mListener = (callBackListener) context;
+        if (context instanceof loginCallBackListener) {
+            mListener = (loginCallBackListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnLoginFragmentInteractionListener");
@@ -73,6 +74,15 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String username = usernameEditText.getText().toString();
+                Context context = getActivity();
+                SharedPreferences sharedPref = context.getSharedPreferences(
+                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString(getString(R.string.username), username);
+                // synchronus executes on current thread.
+               /* editor.commit();*/
+                // asynchronus executes on background thread.
+                editor.apply();
                 mListener.onLoginSuccess(username);
             }
         });

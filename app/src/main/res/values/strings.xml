@@ -4,8 +4,13 @@
     <string name="enter_username">Enter Username</string>
     <string name="submit">SUBMIT</string>
     <string name="hello_username">Hello UserName</string>
+    <string name="choose_profile">Choose Profile Image</string>
+    <string name="preference_file_key">com.example.androidbasics.PREFERENCE_FILE_KEY</string>
     <string name="dummy_image">dummy image</string>
     <string name="password">Password</string>
+    <string name="username">username</string>
+    <string name="password_error">length should be greater than 8 characters</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logout">Logout</string>
 </resources>

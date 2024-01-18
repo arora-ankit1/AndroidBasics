@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("NAME", userName);
 
+
                 // Navigate to DisplayActivity
                 // Explicit Intent
                 Intent intent = new Intent(MainActivity.this, PasswordActivity.class);
