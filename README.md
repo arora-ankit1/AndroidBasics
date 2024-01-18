@@ -1,0 +1,1 @@
+Q. Try to handle navigation from Home Fragment to Password fragment if only password is cleared when user sign's out, i.e. user should navigate from MainContainerActivity to PasswordFragment, instead of LoginFragment.
